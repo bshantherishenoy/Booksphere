@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pytest_cache/
+.copilot/
+.idea/
+.docker/
+.DS_Store
+.kube/
+.virtualBox/
+.vscode/
+.vscode-shared/
