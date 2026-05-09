@@ -27,7 +27,7 @@ jobs:
       run: |
         flake8 app/
         flake8 tests/
-        
+
     - name: Run Tests
       run: |
         export PYTHONPATH=$(pwd)
@@ -39,9 +39,22 @@ jobs:
     needs: test
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Build Docker Image
-      run: |
-        docker build -t booksphere .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/booksphere:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/booksphere:latest
