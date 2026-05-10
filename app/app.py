@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+import socket
 
 app = Flask(__name__)
 
@@ -17,6 +18,11 @@ def home():
 def get_books():
     return jsonify(books)
 
+
+@app.route("/hostname")
+def get_hostname():
+    hostname = socket.gethostname()
+    return f"Hostname: {hostname}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
