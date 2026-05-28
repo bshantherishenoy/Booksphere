@@ -9,7 +9,7 @@ from flask import (
 import os
 
 from forms import BookForm
-from models import Book , db
+from models import Book, db
 
 
 app = Flask(__name__)
