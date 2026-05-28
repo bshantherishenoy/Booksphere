@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3 class="mb-4">
+  Add Book
+</h3>
+
+<form method="POST">
+
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.author.label(class="form-label") }}
+    {{ form.author(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.total_pages.label(class="form-label") }}
+    {{ form.total_pages(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.current_page.label(class="form-label") }}
+    {{ form.current_page(class="form-control") }}
+  </div>
+
+  {{ form.submit(class="btn btn-primary") }}
+
+</form>
+
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

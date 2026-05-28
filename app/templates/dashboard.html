@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>
+      📚 Booksphere Dashboard
+    </h2>
+  </div>
+
+  <!-- Add Book Form -->
+  <div class="card shadow-sm mb-5">
+
+    <div class="card-body">
+
+      <h4 class="mb-4">
+        Add New Book
+      </h4>
+
+      <form method="POST">
+
+        {{ form.hidden_tag() }}
+
+        <!-- Title -->
+        <div class="mb-3">
+
+          {{ form.title.label(class="form-label") }}
+
+          {{ form.title(
+              class="form-control",
+              placeholder="Enter book title"
+          ) }}
+
+          {% for error in form.title.errors %}
+
+            <div class="text-danger small">
+              {{ error }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+        <!-- Author -->
+        <div class="mb-3">
+
+          {{ form.author.label(class="form-label") }}
+
+          {{ form.author(
+              class="form-control",
+              placeholder="Enter author name"
+          ) }}
+
+          {% for error in form.author.errors %}
+
+            <div class="text-danger small">
+              {{ error }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+        <!-- Total Pages -->
+        <div class="mb-3">
+
+          {{ form.total_pages.label(class="form-label") }}
+
+          {{ form.total_pages(
+              class="form-control",
+              placeholder="Enter total pages"
+          ) }}
+
+          {% for error in form.total_pages.errors %}
+
+            <div class="text-danger small">
+              {{ error }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+        <!-- Current Page -->
+        <div class="mb-3">
+
+          {{ form.current_page.label(class="form-label") }}
+
+          {{ form.current_page(
+              class="form-control",
+              placeholder="Enter current page"
+          ) }}
+
+          {% for error in form.current_page.errors %}
+
+            <div class="text-danger small">
+              {{ error }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+        <!-- Submit -->
+        <div class="mt-4">
+
+          {{ form.submit(
+              class="btn btn-success w-100"
+          ) }}
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- Books Section -->
+  <h3 class="mb-4">
+    Books in Library
+  </h3>
+
+  <div class="row">
+
+    {% if books %}
+
+      {% for book in books %}
+
+        <div class="col-md-4 mb-4">
+
+          <div class="card shadow-sm h-100">
+
+            <div class="card-body d-flex flex-column">
+
+              <h5 class="card-title">
+                {{ book.title }}
+              </h5>
+
+              <p class="text-muted">
+                {{ book.author }}
+              </p>
+
+              <p>
+
+                <strong>Author:</strong>
+
+                <span class="badge bg-primary">
+                  {{ book.author }}
+                </span>
+
+              </p>
+
+              <p>
+
+                 <strong>Total Pages:</strong>
+
+                <span class="badge bg-primary">
+                  {{ book.total_pages }}
+                </span>
+
+              </p>
+              <p>
+
+                 <strong>Current Page:</strong>
+
+                <span class="badge bg-primary">
+                  {{ book.current_page }}
+                </span>
+
+              </p>
+              <p>
+
+                 <strong>Status:</strong>
+
+                <span class="badge bg-primary">
+                  {{ book.status }}
+                </span>
+
+              </p>
+
+              <!-- Buttons -->
+              <div class="mt-auto d-flex gap-2">
+
+                <a
+                  href="/books/{{ book.id }}"
+                  class="btn btn-outline-primary btn-sm w-50"
+                >
+                  View
+                </a>
+
+                <form
+                  method="POST"
+                  action="/delete/{{ book.id }}"
+                  class="w-50"
+                >
+
+                  <button
+                    type="submit"
+                    class="btn btn-danger btn-sm w-100"
+                  >
+                    Delete
+                  </button>
+
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      {% endfor %}
+
+    {% else %}
+
+      <div class="col-12">
+
+        <div class="alert alert-info">
+
+          No books available yet.
+
+        </div>
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% endblock %}
