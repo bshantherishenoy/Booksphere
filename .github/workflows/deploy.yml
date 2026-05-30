@@ -46,7 +46,7 @@ jobs:
           version: '1.27.3'
 
       - name: Update kubeconfig for EKS
-        uses: aws-actions/eks-update-kubeconfig@v2
+        uses: aws-actions/amazon-eks-update-kubeconfig@v1
         with:
           cluster-name: ${{ secrets.EKS_CLUSTER_NAME }}
           region: ${{ env.AWS_REGION }}
