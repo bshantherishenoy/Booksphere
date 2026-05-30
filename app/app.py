@@ -8,8 +8,8 @@ from flask import (
 
 import os
 
-from forms import BookForm
-from models import Book, db
+from app.forms import BookForm
+from app.models import Book, db
 
 
 app = Flask(__name__)
@@ -24,6 +24,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 
 db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 
 # HOME / DASHBOARD
@@ -143,10 +145,15 @@ def delete_book(id):
     )
 
 
+@app.route("/health")
+def health():
+    return {
+        "status": "healthy"
+    }, 200
+
 if __name__ == "__main__":
 
-    with app.app_context():
-        db.create_all()
+    
 
     app.run(
         host="0.0.0.0",
