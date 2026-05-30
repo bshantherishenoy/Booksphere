@@ -1,7 +1,53 @@
-version: '3'
+version: "3.9"
 
 services:
-  booksphere:
+
+  booksphere-app:
+
     build: .
+
+    container_name: booksphere-app
+
     ports:
-      - "5000:5000"
+      - "80:5000"
+
+    volumes:
+      - .:/app
+
+    environment:
+      DATABASE_URL: postgresql://booksphere_user:booksphere_password@postgres-db:5432/booksphere_db
+
+    depends_on:
+      - postgres-db
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    restart: unless-stopped
+
+
+  postgres-db:
+
+    image: postgres:15
+
+    container_name: booksphere-postgres
+
+    environment:
+      POSTGRES_USER: booksphere_user
+      POSTGRES_PASSWORD: booksphere_password
+      POSTGRES_DB: booksphere_db
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+
+volumes:
+  postgres_data:
